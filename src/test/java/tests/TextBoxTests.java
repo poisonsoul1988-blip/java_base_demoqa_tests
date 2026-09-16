@@ -1,27 +1,17 @@
 package tests;
 
-import com.codeborne.selenide.Configuration;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 
-public class TextBoxTests {
-
-    @BeforeAll
-    static void beforeAll() {
-        Configuration.browserSize = "1920x1080";
-        Configuration.browser ="chrome";
-        Configuration.baseUrl = "https://demoqa.com/text-box";
-        Configuration.timeout = 10000;
-    }
+public class TextBoxTests extends TestBase{
 
     @Test
     void successfulFillFormTest() {
 
-        open("https://demoqa.com/text-box");
+        open("/text-box");
         $("[id=userName]").setValue("Black Jack");
         $("[id=userEmail]").setValue("black@jack.com");
         $("[id=currentAddress]").setValue("first address 1");
