@@ -10,17 +10,34 @@ public class TextBoxTests extends TestBase{
 
     @Test
     void successfulFillFormTest() {
+        String userName = "Alex Black";
+        String userEmail = "black@jack.com";
+        String currentAddress = "first address 1";
+        String permanentAddress = "second address 2";
 
         open("/text-box");
-        $("[id=userName]").setValue("Black Jack");
-        $("[id=userEmail]").setValue("black@jack.com");
-        $("[id=currentAddress]").setValue("first address 1");
-        $("[id=permanentAddress]").setValue("second address 2");
+        $("[id=userName]").setValue(userName);
+        $("[id=userEmail]").setValue(userEmail);
+        $("[id=currentAddress]").setValue(currentAddress );
+        $("[id=permanentAddress]").setValue(permanentAddress);
         $("[id=submit]").click();
 
-        $("[id=output] [id=name]").shouldHave(text("Black Jack"));
-        $("[id=output] [id=email]").shouldHave(text("black@jack.com"));
-        $("[id=output] [id=currentAddress]").shouldHave(text("first address 1"));
-        $("[id=output] [id=permanentAddress]").shouldHave(text("second address 2"));
+        $("[id=output] [id=name]").shouldHave(text(userName));
+        $("[id=output] [id=email]").shouldHave(text(userEmail));
+        $("[id=output] [id=currentAddress]").shouldHave(text(currentAddress ));
+        $("[id=output] [id=permanentAddress]").shouldHave(text(permanentAddress));
+    }
+
+    @Test
+    void successfulFillFormWithoutAddressTest() {
+        String userName = "Alex Black";
+        String userEmail = "black@jack.com";
+
+        $("[id=userName]").setValue(userName);
+        $("[id=userEmail]").setValue(userEmail);
+        $("[id=submit]").click();
+
+        $("[id=output] [id=name]").shouldHave(text(userName));
+        $("[id=output] [id=email]").shouldHave(text(userEmail));
     }
 }
