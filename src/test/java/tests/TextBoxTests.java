@@ -1,7 +1,7 @@
 package tests;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import pages.TextBoxPage;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
@@ -9,53 +9,49 @@ import static com.codeborne.selenide.Selenide.open;
 import static tests.testdata.TestData.*;
 
 public class TextBoxTests extends TestBase{
-
-//    String userName;
-//    String userEmail;
-//    String currentAddress;
-//    String permanentAddress;
-//
-//    @BeforeEach
-//    public void setup() {
-////        userName = getRandomString(10);
-//        userName = "Alex Black";
-//        userEmail = "black@jack.com";
-//        currentAddress = "first address 1";
-//        permanentAddress = "second address 2";
-//    }
+    TextBoxPage textBoxPage = new TextBoxPage();
 
     @Test
     void successfulFillFormTest() {
+        textBoxPage.openPage();
+        textBoxPage.typeUserName(userName);
+        textBoxPage.typeEmail(userEmail);
+        textBoxPage.typeCurrentAddress(currentAddress );
+        textBoxPage.typePermanentAddress(permanentAddress);
+        textBoxPage.submitForm();
 
-//        String userName = "Alex Black";
-//        String userEmail = "black@jack.com";
-//        String currentAddress = "first address 1";
-//        String permanentAddress = "second address 2";
-
-        open("/text-box");
-        $("[id=userName]").setValue(userName);
-        $("[id=userEmail]").setValue(userEmail);
-        $("[id=currentAddress]").setValue(currentAddress );
-        $("[id=permanentAddress]").setValue(permanentAddress);
-        $("[id=submit]").click();
-
-        $("[id=output] [id=name]").shouldHave(text(userName));
-        $("[id=output] [id=email]").shouldHave(text(userEmail));
-        $("[id=output] [id=currentAddress]").shouldHave(text(currentAddress ));
-        $("[id=output] [id=permanentAddress]").shouldHave(text(permanentAddress));
+        textBoxPage.checkField("name",userName);
+        textBoxPage.checkField("email",userEmail);
+        textBoxPage.checkField("currentAddress",currentAddress);
+        textBoxPage.checkField("permanentAddress",permanentAddress);
     }
 
     @Test
     void successfulFillFormWithoutAddressTest() {
+        textBoxPage.openPage();
+        textBoxPage.typeUserName(userName);
+        textBoxPage.typeEmail(userEmail);
+        textBoxPage.submitForm();
 
-//        String userName = "Alex Black";
-//        String userEmail = "black@jack.com";
-
-        $("[id=userName]").setValue(userName);
-        $("[id=userEmail]").setValue(userEmail);
-        $("[id=submit]").click();
-
-        $("[id=output] [id=name]").shouldHave(text(userName));
-        $("[id=output] [id=email]").shouldHave(text(userEmail));
+        textBoxPage.checkField("name",userName);
+        textBoxPage.checkField("email",userEmail);
     }
+
+    @Test
+    void successfulFillFormWithoutAddressTest_chaining() {
+        textBoxPage
+                .openPage()
+                .typeUserName(userName)
+                .typeEmail(userEmail)
+                .submitForm()
+                .checkField("name",userName)
+                .checkField("email",userEmail);
+    }
+
+//    @Test
+//    void successfulFillFormTest() {
+//        open("/text-box");
+//        typeUserName(userName);
+//        typeEmail(userEmail);
+//    }
 }
